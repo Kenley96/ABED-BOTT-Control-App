@@ -138,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── 6. Splash Screen Animation Orchestrator ────────────────────────
   const initSplashScreen = () => {
+    console.log('[Splash] init started');
     const splash = document.getElementById('splashScreen');
     const loaderFill = document.getElementById('splashLoaderFill');
     const terminal = document.getElementById('splashTerminal');
@@ -191,6 +192,11 @@ document.addEventListener('DOMContentLoaded', () => {
           setTimeout(() => {
             splash.style.display = 'none';
           }, 600); // Wait for transition to complete
+          // After splash hides, show security gate after 4 seconds
+          setTimeout(() => {
+            console.log('[SecurityGate] auto‑show after splash');
+            showSecurityGate();
+          }, 4000);
         }, 150); // Reduced hold before fade-out
       }
     }, 20);
