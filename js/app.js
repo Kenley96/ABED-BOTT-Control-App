@@ -144,12 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!splash || !loaderFill || !terminal) return;
 
     const logs = [
-      { progress: 10, text: '[BOOT] LOADING TRANSLATION SCHEMAS...' },
       { progress: 25, text: '[BOOT] INTERFACING TCP/IP CLIENT WRAPPER...' },
-      { progress: 45, text: '[BOOT] LOADING CYPHER DECRYPTION CARD...' },
       { progress: 60, text: '[BOOT] CONNECTING TO VEHICLE TELEMETRY...' },
-      { progress: 80, text: '[BOOT] PARSING CYBERPUNK STYLING MODULES...' },
-      { progress: 95, text: '[BOOT] STARTING INTERNET COMMAND SHELL...' },
       { progress: 100, text: '[BOOT] SYSTEM SECURED & ACTIVE.' }
     ];
 
@@ -174,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const interval = setInterval(() => {
       // Increment progress by small random steps
-      progress += Math.floor(Math.random() * 12) + 6; // Faster progress
+      progress += Math.floor(Math.random() * 10) + 15; // 15‑25 % steps for ~20 % average
       if (progress >= 100) {
         progress = 100;
         clearInterval(interval);
@@ -195,9 +191,9 @@ document.addEventListener('DOMContentLoaded', () => {
           setTimeout(() => {
             splash.style.display = 'none';
           }, 600); // Wait for transition to complete
-        }, 450); // Hold full bar for a brief moment
+        }, 150); // Reduced hold before fade-out
       }
-    }, 30);
+    }, 20);
   };
 
   initSplashScreen();
