@@ -136,5 +136,80 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // ── 6. Splash Screen Animation Orchestrator ────────────────────────
+  const initSplashScreen = () => {
+    const splash = document.getElementById('splashScreen');
+    const loaderFill = document.getElementById('splashLoaderFill');
+    const terminal = document.getElementById('splashTerminal');
+    if (!splash || !loaderFill || !terminal) return;
+
+    const logs = [
+      { progress: 10, text: '[BOOT] LOADING TRANSLATION SCHEMAS...' },
+      { progress: 25, text: '[BOOT] INTERFACING TCP/IP CLIENT WRAPPER...' },
+      { progress: 45, text: '[BOOT] LOADING CYPHER DECRYPTION CARD...' },
+      { progress: 60, text: '[BOOT] CONNECTING TO VEHICLE TELEMETRY...' },
+      { progress: 80, text: '[BOOT] PARSING CYBERPUNK STYLING MODULES...' },
+      { progress: 95, text: '[BOOT] STARTING INTERNET COMMAND SHELL...' },
+      { progress: 100, text: '[BOOT] SYSTEM SECURED & ACTIVE.' }
+    ];
+
+    let currentLogIndex = 0;
+    let progress = 0;
+
+    const addLogLine = (text) => {
+      const currentLines = terminal.querySelectorAll('.splash-term-line');
+      if (currentLines.length > 0) {
+        currentLines[currentLines.length - 1].className = 'splash-term-line splash-term-line--prev';
+      }
+      const line = document.createElement('div');
+      line.className = 'splash-term-line splash-term-line--current';
+      line.textContent = text;
+      terminal.appendChild(line);
+
+      const allLines = terminal.querySelectorAll('.splash-term-line');
+      if (allLines.length > 2) {
+        allLines[0].remove();
+      }
+    };
+
+    const interval = setInterval(() => {
+      // Increment progress by small random steps
+      progress += Math.floor(Math.random() * 8) + 4;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(interval);
+      }
+
+      loaderFill.style.width = `${progress}%`;
+
+      // Print scheduled log messages
+      if (currentLogIndex < logs.length && progress >= logs[currentLogIndex].progress) {
+        addLogLine(logs[currentLogIndex].text);
+        currentLogIndex++;
+      }
+
+      // Finish sequence when 100%
+      if (progress === 100) {
+        setTimeout(() => {
+          splash.classList.add('fade-out');
+          setTimeout(() => {
+            splash.style.display = 'none';
+          }, 600); // Wait for transition to complete
+        }, 450); // Hold full bar for a brief moment
+      }
+    }, 70);
+  };
+
+  initSplashScreen();
+
+  // ── 7. Service Worker Registration ───────────────────────────────
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then((reg) => console.log('[Service Worker] Registered successfully:', reg.scope))
+        .catch((err) => console.error('[Service Worker] Registration failed:', err));
+    });
+  }
+
   console.log('[App] ABED BOTT ready');
 });

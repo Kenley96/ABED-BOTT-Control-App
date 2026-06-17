@@ -9,6 +9,12 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>ABED BOTT – Smart Car Control</title>
 
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icon-180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,8 +26,28 @@
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/splash.css">
 </head>
 <body>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- STARTUP SPLASH SCREEN                           -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="splash-screen" id="splashScreen">
+    <div class="splash-container">
+      <div class="splash-logo-wrapper">
+        <div class="splash-ring splash-ring--outer"></div>
+        <div class="splash-ring"></div>
+        <img src="assets/icon-512.png" alt="ABED BOTT Logo" class="splash-logo">
+      </div>
+      <div class="splash-loader-bar">
+        <div class="splash-loader-fill" id="splashLoaderFill"></div>
+      </div>
+      <div class="splash-terminal" id="splashTerminal">
+        <div class="splash-term-line splash-term-line--current">INITIALIZING CORE NEURAL NODE...</div>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══════════════════════════════════════════════ -->
   <!-- APP HEADER                                      -->
