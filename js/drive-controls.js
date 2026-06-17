@@ -13,7 +13,6 @@ import {
   sendChime,
   sendLedCommand,
   mapVelocity,
-  COMMANDS
 } from './command-service.js';
 import { updateVelocityLabel, updateModeCard, updateHeadlightUI, updateRgbLEDUI } from './ui-controller.js';
 import { showError } from './error-handler.js';
@@ -94,7 +93,7 @@ export function initDriveControls() {
  * - `change` event → actually send to car
  */
 export function initVelocitySlider() {
-  const slider = document.getElementById('velocity-slider') ||
+  const slider = document.getElementById('velocitySlider') ||
                  document.querySelector('.velocity-slider');
 
   if (!slider) {

@@ -39,7 +39,7 @@ function $$(selector) {
 export function updateConnectionUI(isConnected, isConnecting) {
   const dot   = $('.status-dot');
   const label = $('.status-label');
-  const btn   = $('.connect-btn') || $('#connect-btn');
+  const btn   = $('#connectBtn');
 
   if (dot) {
     dot.classList.toggle('connected', isConnected);

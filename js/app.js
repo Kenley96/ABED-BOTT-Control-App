@@ -28,11 +28,13 @@ import {
 /* ------------------------------------------------------------------ */
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[App] ABED BOTT initializing…');
+  console.log('APP STARTED');
+console.log('[App] ABED BOTT initializing…');
 
   // ── 1. Connect button ────────────────────────────────────────────
-  const connectBtn = document.querySelector('.connect-btn') ||
-                     document.getElementById('connect-btn');
+  const connectBtn =
+    document.querySelector('.connect-btn') ||
+    document.getElementById('connectBtn');
 
   if (connectBtn) {
     connectBtn.addEventListener('click', () => {
@@ -138,7 +140,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── 6. Splash Screen Animation Orchestrator ────────────────────────
   const initSplashScreen = () => {
-    console.log('[Splash] init started');
+    console.log('SPLASH STARTED');
+console.log('[Splash] init started');
     const splash = document.getElementById('splashScreen');
     const loaderFill = document.getElementById('splashLoaderFill');
     const terminal = document.getElementById('splashTerminal');
@@ -188,7 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // Finish sequence when 100%
       if (progress === 100) {
         setTimeout(() => {
-          splash.classList.add('fade-out');
+          console.log('SPLASH HIDING');
+splash.classList.add('fade-out');
           setTimeout(() => {
             splash.style.display = 'none';
           }, 600); // Wait for transition to complete
@@ -205,13 +209,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initSplashScreen();
 
   // ── 7. Service Worker Registration ───────────────────────────────
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then((reg) => console.log('[Service Worker] Registered successfully:', reg.scope))
-        .catch((err) => console.error('[Service Worker] Registration failed:', err));
-    });
-  }
+  // if ('serviceWorker' in navigator) {
+  //   window.addEventListener('load', () => {
+  //     navigator.serviceWorker.register('./sw.js')
+  //       .then((reg) => console.log('[Service Worker] Registered successfully:', reg.scope))
+  //       .catch((err) => console.error('[Service Worker] Registration failed:', err));
+  //   });
+  // }
 
   console.log('[App] ABED BOTT ready');
 });

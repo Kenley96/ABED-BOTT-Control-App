@@ -4,7 +4,7 @@
  */
 
 import socketService from './socket-service.js';
-import stateManager  from './state-manager.js';
+import stateManager from './state-manager.js';
 
 // Driving command byte-to-string mappings
 const MOTOR_COMMANDS = {
