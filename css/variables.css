@@ -1,0 +1,169 @@
+/* ============================================================
+   ABED BOTT — Design System Tokens
+   Cyberpunk Car Control Dashboard
+   ============================================================ */
+
+:root {
+  /* ── Core Palette ────────────────────────────────────────── */
+  --bg-obsidian:    #0A0A0C;
+  --neon-cyan:      #00F0FF;
+  --royal-blue:     #0055FF;
+  --text-white:     #FFFFFF;
+  --emerald:        #00FF88;
+  --crimson:        #FF0033;
+  --slate:          #2A2A2E;
+
+  /* ── Alpha Variants ──────────────────────────────────────── */
+  --bg-obsidian-95: rgba(10, 10, 12, 0.95);
+  --bg-obsidian-85: rgba(10, 10, 12, 0.85);
+  --bg-obsidian-70: rgba(10, 10, 12, 0.70);
+  --bg-obsidian-50: rgba(10, 10, 12, 0.50);
+
+  --neon-cyan-80:   rgba(0, 240, 255, 0.80);
+  --neon-cyan-60:   rgba(0, 240, 255, 0.60);
+  --neon-cyan-40:   rgba(0, 240, 255, 0.40);
+  --neon-cyan-25:   rgba(0, 240, 255, 0.25);
+  --neon-cyan-15:   rgba(0, 240, 255, 0.15);
+  --neon-cyan-08:   rgba(0, 240, 255, 0.08);
+
+  --royal-blue-80:  rgba(0, 85, 255, 0.80);
+  --royal-blue-60:  rgba(0, 85, 255, 0.60);
+  --royal-blue-40:  rgba(0, 85, 255, 0.40);
+  --royal-blue-25:  rgba(0, 85, 255, 0.25);
+  --royal-blue-15:  rgba(0, 85, 255, 0.15);
+
+  --emerald-60:     rgba(0, 255, 136, 0.60);
+  --emerald-25:     rgba(0, 255, 136, 0.25);
+
+  --crimson-60:     rgba(255, 0, 51, 0.60);
+  --crimson-25:     rgba(255, 0, 51, 0.25);
+  --crimson-15:     rgba(255, 0, 51, 0.15);
+
+  --slate-80:       rgba(42, 42, 46, 0.80);
+  --slate-50:       rgba(42, 42, 46, 0.50);
+  --slate-30:       rgba(42, 42, 46, 0.30);
+
+  --white-80:       rgba(255, 255, 255, 0.80);
+  --white-50:       rgba(255, 255, 255, 0.50);
+  --white-20:       rgba(255, 255, 255, 0.20);
+  --white-10:       rgba(255, 255, 255, 0.10);
+  --white-05:       rgba(255, 255, 255, 0.05);
+
+  /* ── Typography ──────────────────────────────────────────── */
+  --font-display:   'Orbitron', sans-serif;
+  --font-mono:      'Roboto Mono', monospace;
+
+  --fw-thin:        300;
+  --fw-regular:     400;
+  --fw-bold:        700;
+
+  --fs-2xs:         0.625rem;   /* 10px */
+  --fs-xs:          0.75rem;    /* 12px */
+  --fs-sm:          0.8125rem;  /* 13px */
+  --fs-base:        0.875rem;   /* 14px */
+  --fs-md:          1rem;       /* 16px */
+  --fs-lg:          1.25rem;    /* 20px */
+  --fs-xl:          1.5rem;     /* 24px */
+  --fs-2xl:         2rem;       /* 32px */
+  --fs-3xl:         2.5rem;     /* 40px */
+
+  --lh-tight:       1.1;
+  --lh-normal:      1.4;
+  --lh-relaxed:     1.6;
+
+  --ls-tight:       0.02em;
+  --ls-normal:      0.06em;
+  --ls-wide:        0.12em;
+  --ls-ultra:       0.25em;
+
+  /* ── Spacing Scale ───────────────────────────────────────── */
+  --sp-2xs:         2px;
+  --sp-xs:          4px;
+  --sp-sm:          8px;
+  --sp-md:          12px;
+  --sp-base:        16px;
+  --sp-lg:          20px;
+  --sp-xl:          24px;
+  --sp-2xl:         32px;
+  --sp-3xl:         40px;
+  --sp-4xl:         48px;
+  --sp-5xl:         64px;
+
+  /* ── Border Radius ───────────────────────────────────────── */
+  --radius-xs:      4px;
+  --radius-sm:      6px;
+  --radius-md:      8px;
+  --radius-lg:      12px;
+  --radius-xl:      16px;
+  --radius-2xl:     20px;
+  --radius-full:    9999px;
+
+  /* ── Glassmorphism ───────────────────────────────────────── */
+  --glass-bg:       rgba(10, 10, 12, 0.55);
+  --glass-bg-heavy: rgba(10, 10, 12, 0.75);
+  --glass-border:   rgba(255, 255, 255, 0.08);
+  --glass-blur:     blur(16px);
+  --glass-blur-lg:  blur(24px);
+  --glass-blur-xl:  blur(32px);
+
+  /* ── Glow / Shadow Definitions ───────────────────────────── */
+  --glow-cyan-sm:   0 0 6px var(--neon-cyan-40),
+                    0 0 12px var(--neon-cyan-25);
+  --glow-cyan-md:   0 0 8px var(--neon-cyan-60),
+                    0 0 20px var(--neon-cyan-40),
+                    0 0 40px var(--neon-cyan-15);
+  --glow-cyan-lg:   0 0 10px var(--neon-cyan-80),
+                    0 0 30px var(--neon-cyan-60),
+                    0 0 60px var(--neon-cyan-25),
+                    0 0 100px var(--neon-cyan-08);
+  --glow-cyan-text: 0 0 6px var(--neon-cyan-60),
+                    0 0 14px var(--neon-cyan-25);
+
+  --glow-blue-sm:   0 0 6px var(--royal-blue-40),
+                    0 0 12px var(--royal-blue-25);
+  --glow-blue-md:   0 0 8px var(--royal-blue-60),
+                    0 0 20px var(--royal-blue-40),
+                    0 0 40px var(--royal-blue-15);
+
+  --glow-emerald:   0 0 8px var(--emerald-60),
+                    0 0 20px var(--emerald-25);
+  --glow-crimson:   0 0 8px var(--crimson-60),
+                    0 0 20px var(--crimson-25);
+
+  --shadow-soft:    0 2px 8px rgba(0, 0, 0, 0.30);
+  --shadow-md:      0 4px 16px rgba(0, 0, 0, 0.40);
+  --shadow-lg:      0 8px 32px rgba(0, 0, 0, 0.50);
+  --shadow-inset:   inset 0 1px 4px rgba(0, 0, 0, 0.40);
+
+  /* ── Gradients ───────────────────────────────────────────── */
+  --gradient-slider:        linear-gradient(90deg, #00F0FF 0%, #0055FF 55%, #FFFFFF 100%);
+  --gradient-slider-active: linear-gradient(90deg, #00F0FF 0%, #0088FF 40%, #00F0FF 100%);
+  --gradient-header:        linear-gradient(180deg, rgba(10,10,12,0.90) 0%, rgba(10,10,12,0.60) 100%);
+  --gradient-card:          linear-gradient(135deg, rgba(42,42,46,0.30) 0%, rgba(10,10,12,0.50) 100%);
+  --gradient-hex-active:    linear-gradient(180deg, rgba(0,240,255,0.25) 0%, rgba(0,85,255,0.15) 100%);
+  --gradient-danger:        linear-gradient(135deg, rgba(255,0,51,0.15) 0%, rgba(10,10,12,0.50) 100%);
+
+  /* ── Transitions ─────────────────────────────────────────── */
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-back:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast:  150ms;
+  --duration-base:  250ms;
+  --duration-slow:  400ms;
+  --duration-crawl: 600ms;
+
+  /* ── Z-Index Scale ───────────────────────────────────────── */
+  --z-base:         1;
+  --z-controls:     10;
+  --z-header:       100;
+  --z-overlay:      500;
+  --z-modal:        600;
+  --z-toast:        700;
+  --z-top:          999;
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  --header-height:  56px;
+  --max-width:      900px;
+  --safe-bottom:    env(safe-area-inset-bottom, 0px);
+  --safe-top:       env(safe-area-inset-top, 0px);
+}

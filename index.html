@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0A0A0C">
+  <meta name="description" content="ABED BOTT – Smart Car Control Dashboard. Professional TCP/IP client interface for ESP32 Smart Car.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>ABED BOTT – Smart Car Control</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- APP HEADER                                      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <header class="app-header" id="appHeader">
+    <div class="header-left">
+      <h1 class="app-title">ABED BOTT</h1>
+      <span class="app-subtitle">SMART CAR CONTROL</span>
+    </div>
+    <div class="header-right">
+      <div class="connection-indicator" id="connectionIndicator">
+        <span class="status-dot disconnected" id="statusDot"></span>
+        <span class="status-label" id="statusLabel">Disconnected</span>
+      </div>
+      <button class="connect-btn" id="connectBtn" type="button">
+        <svg class="connect-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 1l4 4m0 0l4-4M5 5v6m14-8a8.5 8.5 0 0 1 0 17H6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span id="connectBtnText">CONNECT</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- PHASE A: SECURITY GATE OVERLAY                  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="security-overlay" id="securityOverlay">
+    <div class="security-content">
+      <!-- Ripple effect container -->
+      <div class="ripple-container" id="rippleContainer"></div>
+
+      <!-- Lock Icon -->
+      <div class="lock-icon-wrapper">
+        <svg class="lock-icon" viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0110 0v4"/>
+          <circle cx="12" cy="16" r="1"/>
+        </svg>
+      </div>
+
+      <!-- Lock Message -->
+      <h2 class="lock-message locked" id="lockMessage">
+        SYSTEM LOCKED<br>
+        <span class="lock-submessage">SCAN VEHICLE KEY CARD</span>
+      </h2>
+
+      <!-- Emergency PIN Section -->
+      <p class="pin-label">EMERGENCY ACCESS PIN</p>
+
+      <!-- PIN Dot Display -->
+      <div class="pin-display" id="pinDisplay">
+        <div class="pin-dot" data-index="0"></div>
+        <div class="pin-dot" data-index="1"></div>
+        <div class="pin-dot" data-index="2"></div>
+        <div class="pin-dot" data-index="3"></div>
+      </div>
+
+      <!-- PIN Status Message -->
+      <p class="pin-status" id="pinStatus"></p>
+
+      <!-- PIN Keypad -->
+      <div class="pin-keypad" id="pinKeypad">
+        <button class="pin-key" data-key="1" type="button">1</button>
+        <button class="pin-key" data-key="2" type="button">2</button>
+        <button class="pin-key" data-key="3" type="button">3</button>
+        <button class="pin-key" data-key="4" type="button">4</button>
+        <button class="pin-key" data-key="5" type="button">5</button>
+        <button class="pin-key" data-key="6" type="button">6</button>
+        <button class="pin-key" data-key="7" type="button">7</button>
+        <button class="pin-key" data-key="8" type="button">8</button>
+        <button class="pin-key" data-key="9" type="button">9</button>
+        <button class="pin-key pin-key--backspace" data-key="backspace" type="button" aria-label="Backspace">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 4H8l-7 8 7 8h13a2 2 0 002-2V6a2 2 0 00-2-2z" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="18" y1="9" x2="12" y2="15" stroke-linecap="round"/>
+            <line x1="12" y1="9" x2="18" y2="15" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="pin-key" data-key="0" type="button">0</button>
+        <button class="pin-key pin-key--submit" data-key="submit" type="button" aria-label="Submit">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- PHASE B: MASTER DASHBOARD                       -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <main class="dashboard" id="dashboard">
+
+    <!-- ─── Telemetry Monitor Bar ─── -->
+    <section class="telemetry-bar" id="telemetryBar">
+      <div class="telemetry-item">
+        <span class="telemetry-label">SYSTEM STATE</span>
+        <span class="telemetry-value" id="systemStateValue">Idle</span>
+      </div>
+      <div class="telemetry-divider"></div>
+      <div class="telemetry-item">
+        <span class="telemetry-label">CURRENT SPEED</span>
+        <span class="telemetry-value" id="currentSpeedValue">0</span>
+      </div>
+      <div class="telemetry-divider"></div>
+      <div class="telemetry-item">
+        <span class="telemetry-label">MODE</span>
+        <span class="telemetry-value" id="activeModeValue">Manual</span>
+      </div>
+    </section>
+
+    <!-- ─── Controls Grid ─── -->
+    <div class="controls-grid">
+
+      <!-- ─── Driving Cluster (Left) ─── -->
+      <section class="drive-cluster" id="driveCluster">
+        <h3 class="section-label">DRIVE CONTROLS</h3>
+        <div class="drive-buttons">
+          <!-- Row 1: Forward -->
+          <div class="drive-row drive-row--single">
+            <button class="hex-btn" data-command="63" id="btnForward" type="button" aria-label="Forward">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 19V5m0 0l-7 7m7-7l7 7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <!-- Row 2: Left, Stop, Right -->
+          <div class="drive-row drive-row--triple">
+            <button class="hex-btn" data-command="61" id="btnLeft" type="button" aria-label="Left">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M19 12H5m0 0l7-7m-7 7l7 7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="hex-btn hex-btn--stop" data-command="60" id="btnStop" type="button" aria-label="Stop">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <rect x="6" y="6" width="12" height="12" rx="2"/>
+              </svg>
+            </button>
+            <button class="hex-btn" data-command="62" id="btnRight" type="button" aria-label="Right">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14m0 0l-7-7m7 7l-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <!-- Row 3: Backward -->
+          <div class="drive-row drive-row--single">
+            <button class="hex-btn" data-command="65" id="btnBackward" type="button" aria-label="Backward">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 5v14m0 0l7-7m-7 7l-7-7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <!-- Row 4: Rotate CCW, Rotate CW -->
+          <div class="drive-row drive-row--double">
+            <button class="hex-btn hex-btn--rotate" data-command="64" id="btnRotateCCW" type="button" aria-label="Rotate Counter-Clockwise">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 4v6h6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3.51 15a9 9 0 102.13-9.36L1 10" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="hex-btn hex-btn--rotate" data-command="66" id="btnRotateCW" type="button" aria-label="Rotate Clockwise">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── Right Panel: Automation + Hardware ─── -->
+      <section class="right-panel">
+
+        <!-- Automation Mode Selectors -->
+        <div class="automation-panel" id="automationPanel">
+          <h3 class="section-label">AUTOMATION MODES</h3>
+          <div class="mode-cards">
+            <button class="mode-card" data-mode="human-follow" data-command="68" id="modeHumanFollow" type="button">
+              <svg class="mode-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                <path d="M16 3.13a4 4 0 010 7.75"/>
+              </svg>
+              <span class="mode-label">HUMAN FOLLOWING</span>
+              <span class="mode-status" id="humanFollowStatus">INACTIVE</span>
+            </button>
+            <button class="mode-card" data-mode="obstacle-avoid" data-command="69" id="modeObstacleAvoid" type="button">
+              <svg class="mode-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="mode-label">OBSTACLE AVOIDANCE</span>
+              <span class="mode-status" id="obstacleAvoidStatus">INACTIVE</span>
+            </button>
+          </div>
+          <button class="cancel-mode-btn" id="cancelModeBtn" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" stroke-linecap="round"/>
+              <line x1="6" y1="6" x2="18" y2="18" stroke-linecap="round"/>
+            </svg>
+            CANCEL MODE
+          </button>
+        </div>
+
+        <!-- Hardware Peripheral Utilities -->
+        <div class="hardware-panel" id="hardwarePanel">
+          <h3 class="section-label">HARDWARE UTILITIES</h3>
+          <div class="hardware-controls">
+            <!-- Headlights Toggle -->
+            <div class="hardware-item">
+              <div class="hardware-item-header">
+                <svg class="hardware-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="5"/>
+                  <line x1="12" y1="1" x2="12" y2="3" stroke-linecap="round"/>
+                  <line x1="12" y1="21" x2="12" y2="23" stroke-linecap="round"/>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke-linecap="round"/>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke-linecap="round"/>
+                  <line x1="1" y1="12" x2="3" y2="12" stroke-linecap="round"/>
+                  <line x1="21" y1="12" x2="23" y2="12" stroke-linecap="round"/>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke-linecap="round"/>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke-linecap="round"/>
+                </svg>
+                <span class="hardware-label">HEADLIGHTS</span>
+              </div>
+              <label class="toggle-switch" id="headlightToggle">
+                <input type="checkbox" id="headlightCheckbox">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <!-- RGB LED Control -->
+            <div class="hardware-item hardware-item--rgb">
+              <div class="hardware-item-header">
+                <svg class="hardware-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <span class="hardware-label">RGB LED CONTROL</span>
+              </div>
+              <div class="rgb-buttons">
+                <button class="rgb-btn rgb-btn--red" data-rgb="red" data-command="70" id="rgbRed" type="button">RED</button>
+                <button class="rgb-btn rgb-btn--green" data-rgb="green" data-command="71" id="rgbGreen" type="button">GREEN</button>
+                <button class="rgb-btn rgb-btn--flicker" data-rgb="flicker" data-command="73" id="rgbFlicker" type="button">FLICKER</button>
+                <button class="rgb-btn rgb-btn--off" data-rgb="off" data-command="72" id="rgbOff" type="button">OFF</button>
+              </div>
+            </div>
+            <!-- Audio Chimes -->
+            <div class="hardware-item">
+              <div class="hardware-item-header">
+                <svg class="hardware-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" stroke-linejoin="round"/>
+                  <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" stroke-linecap="round"/>
+                </svg>
+                <span class="hardware-label">AUDIO CHIMES</span>
+              </div>
+              <div class="chime-buttons">
+                <button class="chime-btn" data-chime="alpha" data-command="84" id="chimeAlpha" type="button">α</button>
+                <button class="chime-btn" data-chime="beta" data-command="85" id="chimeBeta" type="button">β</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ─── Velocity Slider ─── -->
+    <section class="velocity-section" id="velocitySection">
+      <div class="velocity-header">
+        <h3 class="section-label">VELOCITY CONTROL</h3>
+        <div class="velocity-readout">
+          <span class="velocity-value" id="velocityMapped">130</span>
+          <span class="velocity-unit">/ 255</span>
+        </div>
+      </div>
+      <div class="velocity-slider-wrapper">
+        <input
+          type="range"
+          class="velocity-slider"
+          id="velocitySlider"
+          min="0"
+          max="100"
+          value="0"
+          step="1"
+          aria-label="Velocity control"
+        >
+        <div class="velocity-track-fill" id="velocityTrackFill"></div>
+      </div>
+      <div class="velocity-labels">
+        <span>130</span>
+        <span>192</span>
+        <span>255</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- TOAST CONTAINER                                 -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SCRIPTS (ES6 Modules)                           -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

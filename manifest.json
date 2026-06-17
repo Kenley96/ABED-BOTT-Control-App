@@ -1,0 +1,22 @@
+{
+  "short_name": "ABED BOTT",
+  "name": "ABED BOTT – Smart Car Control App",
+  "description": "Professional cyberpunk TCP/IP client control interface for ESP32 Smart Car.",
+  "start_url": "./index.html",
+  "background_color": "#0A0A0C",
+  "theme_color": "#0A0A0C",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

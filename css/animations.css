@@ -1,0 +1,333 @@
+/* ============================================================
+   ABED BOTT — Keyframe Animations & Utilities
+   Cyberpunk Car Control Dashboard
+   ============================================================ */
+
+/* ── Neon Pulse ────────────────────────────────────────────── 
+   Used on: active controls, connect button, hex buttons
+   Breathes the glow shadow from subtle to intense              */
+@keyframes neon-pulse {
+  0% {
+    box-shadow: 0 0 5px var(--neon-cyan-40),
+                0 0 10px var(--neon-cyan-25),
+                0 0 20px var(--neon-cyan-08);
+  }
+  50% {
+    box-shadow: 0 0 10px var(--neon-cyan-60),
+                0 0 25px var(--neon-cyan-40),
+                0 0 50px var(--neon-cyan-25),
+                0 0 80px var(--neon-cyan-08);
+  }
+  100% {
+    box-shadow: 0 0 5px var(--neon-cyan-40),
+                0 0 10px var(--neon-cyan-25),
+                0 0 20px var(--neon-cyan-08);
+  }
+}
+
+/* ── Red Pulse ─────────────────────────────────────────────── 
+   Used on: lock message text, error states
+   Ominous warning pulse                                        */
+@keyframes red-pulse {
+  0% {
+    opacity: 1;
+    text-shadow: 0 0 4px var(--crimson-60),
+                 0 0 12px var(--crimson-25);
+  }
+  50% {
+    opacity: 0.4;
+    text-shadow: 0 0 2px var(--crimson-25);
+  }
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 4px var(--crimson-60),
+                 0 0 12px var(--crimson-25);
+  }
+}
+
+/* ── Ripple Expand ─────────────────────────────────────────── 
+   Used on: access granted success burst
+   Radial expansion from center with fade-out                   */
+@keyframes ripple-expand {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  60% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ── Shake ─────────────────────────────────────────────────── 
+   Used on: wrong PIN input, error responses
+   Sharp horizontal jitter                                      */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-4px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(4px);
+  }
+}
+
+/* ── Fade Slide Up ─────────────────────────────────────────── 
+   Used on: screen transitions, element entrance
+   Elegant upward entrance with opacity                         */
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Fade Slide Down ───────────────────────────────────────── 
+   Used on: element exits
+   Graceful downward exit                                       */
+@keyframes fade-slide-down {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* ── Fade Out ──────────────────────────────────────────────── 
+   Used on: overlay dismiss, toast auto-hide                    */
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ── Fade In ───────────────────────────────────────────────── 
+   Used on: overlay appear, general entrance                    */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Spin Glow ─────────────────────────────────────────────── 
+   Used on: connecting state indicator
+   Rotating border shimmer with color shift                     */
+@keyframes spin-glow {
+  0% {
+    box-shadow: 0 0 6px var(--neon-cyan-40),
+                0 0 15px var(--neon-cyan-15);
+    border-color: var(--neon-cyan);
+  }
+  33% {
+    box-shadow: 0 0 6px var(--royal-blue-40),
+                0 0 15px var(--royal-blue-15);
+    border-color: var(--royal-blue);
+  }
+  66% {
+    box-shadow: 0 0 6px var(--neon-cyan-40),
+                0 0 15px var(--neon-cyan-15);
+    border-color: var(--neon-cyan);
+  }
+  100% {
+    box-shadow: 0 0 6px var(--royal-blue-40),
+                0 0 15px var(--royal-blue-15);
+    border-color: var(--royal-blue);
+  }
+}
+
+/* ── Dot Pulse ─────────────────────────────────────────────── 
+   Used on: connection status dot
+   Subtle scale throb                                           */
+@keyframes dot-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.7;
+  }
+}
+
+/* ── Cyan Ripple ───────────────────────────────────────────── 
+   Used on: chime button press effect
+   Radial water-drop ripple from click point                    */
+@keyframes cyan-ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+    background: var(--neon-cyan-40);
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+    background: var(--neon-cyan-08);
+  }
+}
+
+/* ── Slide Up ──────────────────────────────────────────────── 
+   Used on: toast notifications
+   Clean upward slide from below viewport                       */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ── Slide Down Out ────────────────────────────────────────── 
+   Used on: toast dismiss                                       */
+@keyframes slide-down-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* ── Glow Breathe ──────────────────────────────────────────── 
+   Used on: active hex buttons subtle idle animation
+   Barely perceptible luminance oscillation                     */
+@keyframes glow-breathe {
+  0%, 100% {
+    box-shadow: 0 0 6px var(--neon-cyan-25),
+                0 0 14px var(--neon-cyan-08);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 0 10px var(--neon-cyan-40),
+                0 0 22px var(--neon-cyan-15);
+    filter: brightness(1.05);
+  }
+}
+
+/* ── Scale Pop ─────────────────────────────────────────────── 
+   Used on: button press feedback
+   Quick scale-down then rebound                                */
+@keyframes scale-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(0.92);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ── Border Trace ──────────────────────────────────────────── 
+   Used on: security overlay border
+   Neon line tracing around the perimeter                       */
+@keyframes border-trace {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+/* ── Pin Fill ──────────────────────────────────────────────── 
+   Used on: PIN dot being filled
+   Quick scale bounce on fill                                   */
+@keyframes pin-fill {
+  0% {
+    transform: scale(0.5);
+    background: transparent;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    background: var(--neon-cyan);
+  }
+}
+
+
+/* ============================================================
+   Animation Utility Classes
+   ============================================================ */
+
+.animate-shake {
+  animation: shake 0.6s var(--ease-out-expo) both;
+}
+
+.animate-ripple {
+  animation: ripple-expand 0.8s var(--ease-out-expo) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.35s var(--ease-in-out) both;
+}
+
+.animate-fade-out {
+  animation: fade-out 0.3s var(--ease-in-out) both;
+}
+
+.animate-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: fade-slide-up 0.45s var(--ease-out-expo) both;
+}
+
+.animate-slide-down-out {
+  animation: fade-slide-down 0.3s var(--ease-in-out) both;
+}
+
+.animate-scale-pop {
+  animation: scale-pop 0.25s var(--ease-out-back) both;
+}
+
+.animate-glow {
+  animation: glow-breathe 3s ease-in-out infinite;
+}
+
+/* ── Staggered Entrance Delays ─────────────────────────────── */
+.delay-1 { animation-delay: 50ms; }
+.delay-2 { animation-delay: 100ms; }
+.delay-3 { animation-delay: 150ms; }
+.delay-4 { animation-delay: 200ms; }
+.delay-5 { animation-delay: 250ms; }
+.delay-6 { animation-delay: 300ms; }
+.delay-7 { animation-delay: 350ms; }
+.delay-8 { animation-delay: 400ms; }
+.delay-9 { animation-delay: 450ms; }
+.delay-10 { animation-delay: 500ms; }
