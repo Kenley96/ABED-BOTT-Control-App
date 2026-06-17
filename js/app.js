@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const interval = setInterval(() => {
       // Increment progress by small random steps
-      progress += Math.floor(Math.random() * 8) + 4;
+      progress += Math.floor(Math.random() * 12) + 6; // Faster progress
       if (progress >= 100) {
         progress = 100;
         clearInterval(interval);
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }, 600); // Wait for transition to complete
         }, 450); // Hold full bar for a brief moment
       }
-    }, 70);
+    }, 30);
   };
 
   initSplashScreen();
