@@ -4,7 +4,18 @@
    ============================================================ */
 
 :root {
-  /* ── Core Palette ────────────────────────────────────────── */
+  /* ── Light Blue Futuristic Palette ─────────────────────── */
+  --primary:          #4FC3F7;   /* Primary Accent */
+  --primary-glow:     #29B6F6;   /* Primary Glow */
+  --secondary:        #81D4FA;   /* Secondary Accent */
+  --highlight:        #B3E5FC;   /* Highlight */
+  --surface:          #F7FBFF;   /* Surface */
+  --surface-secondary:#EEF7FD;   /* Surface Secondary */
+  --border:           rgba(79,195,247,0.25);
+  --text-primary:     #0F172A;
+  --text-secondary:   #475569;
+
+  /* Map legacy variables to new palette for backward compatibility */
   --bg-obsidian:    #0A0A0C;
   --neon-cyan:      #00F0FF;
   --royal-blue:     #0055FF;

@@ -33,11 +33,10 @@ console.log('[App] ABED BOTT initializing…');
 
   // ── 1. Connect button ────────────────────────────────────────────
   const connectBtn =
-    document.querySelector('.connect-btn') ||
     document.getElementById('connectBtn');
 
   if (connectBtn) {
-    connectBtn.addEventListener('click', () => {
+    connectBtn.addEventListener('pointerup', () => {
       if (socketService.isConnected) {
         socketService.disconnect();
       } else {

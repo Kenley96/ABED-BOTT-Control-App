@@ -386,8 +386,9 @@
 /* ── Hexagonal Driving Buttons ──────────────────────────────── */
 .hex-btn {
   position: relative;
-  width: 72px;
-  height: 82px;
+  width: clamp(48px, 12vw, 72px);
+  height: auto;
+  aspect-ratio: 1;
   background: rgba(42, 42, 46, 0.4);
   color: var(--white-80);
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
