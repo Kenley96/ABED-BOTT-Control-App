@@ -6,7 +6,7 @@
 import stateManager from './state-manager.js';
 
 const CAR_IP = '192.168.4.1';
-const BASE_URL = `http://${CAR_IP}`;
+const BASE_URL = `//${CAR_IP}`;
 
 class SocketService {
   constructor() {
