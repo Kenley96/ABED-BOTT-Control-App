@@ -10,7 +10,7 @@
   padding-top: var(--header-height);
   background-color: var(--surface);
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
   max-width: var(--max-width);
   margin: 0 auto;
   box-sizing: border-box;
@@ -82,7 +82,7 @@
   gap: var(--sp-base);
   padding: var(--sp-base);
   flex-grow: 1;
-  overflow: hidden;
+  overflow-y: auto;
   min-height: 0; /* Important for flex-child grid overflow */
 }
 

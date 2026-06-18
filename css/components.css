@@ -523,7 +523,7 @@
 .mode-status {
   font-family: var(--font-mono);
   font-size: var(--fs-2xs);
-  color: var(--white-50);
+  color: var(--text-secondary);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xs);
   padding: var(--sp-2xs) var(--sp-xs);
@@ -556,10 +556,10 @@
 }
 
 .mode-card.active .mode-status {
-  color: var(--emerald);
-  border-color: var(--emerald-60);
-  background: rgba(0, 255, 136, 0.08);
-  text-shadow: 0 0 4px var(--emerald-25);
+  color: var(--primary);
+  border-color: rgba(79,195,247,0.55);
+  background: rgba(79,195,247,0.12);
+  text-shadow: 0 0 10px rgba(41,182,246,0.25);
   font-weight: var(--fw-bold);
   content: 'ACTIVE';
 }

@@ -34,6 +34,11 @@ class SocketService {
       connectionError: null
     });
 
+    // Keep behavior working even if the browser is “offline” (navigator.onLine=false).
+    // We still attempt direct LAN requests to 192.168.4.1.
+    // Service worker also won’t intercept cross-origin requests.
+
+
     try {
       // Send a test probe request (with a short 2.5s timeout)
       const controller = new AbortController();
