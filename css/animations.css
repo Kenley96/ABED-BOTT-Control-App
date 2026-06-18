@@ -215,16 +215,17 @@
    Barely perceptible luminance oscillation                     */
 @keyframes glow-breathe {
   0%, 100% {
-    box-shadow: 0 0 6px var(--neon-cyan-25),
-                0 0 14px var(--neon-cyan-08);
+    box-shadow: 0 0 6px rgba(41,182,246,0.22),
+                0 0 14px rgba(41,182,246,0.10);
     filter: brightness(1);
   }
   50% {
-    box-shadow: 0 0 10px var(--neon-cyan-40),
-                0 0 22px var(--neon-cyan-15);
+    box-shadow: 0 0 10px rgba(41,182,246,0.35),
+                0 0 22px rgba(41,182,246,0.15);
     filter: brightness(1.05);
   }
 }
+
 
 /* ── Scale Pop ─────────────────────────────────────────────── 
    Used on: button press feedback
