@@ -4,17 +4,21 @@
    ============================================================ */
 
 .dashboard {
+  /* Mobile-first layout: fixed header + scrollable middle + fixed footer */
   display: flex;
   flex-direction: column;
   height: 100vh;
+  max-height: 100vh;
   padding-top: var(--header-height);
+  padding-bottom: env(safe-area-inset-bottom);
   background-color: var(--surface);
   position: relative;
-  overflow-y: auto;
   max-width: var(--max-width);
   margin: 0 auto;
   box-sizing: border-box;
+  overflow: hidden;
 }
+
 
 /* ── Telemetry Monitor Bar ──────────────────────────────────── */
 .telemetry-bar {
@@ -75,25 +79,29 @@
   margin: 0 var(--sp-md);
 }
 
-/* ── Controls Grid ─────────────────────────────────────────── */
+/* ── Middle scroll area (controls + velocity) ─────────────── */
 .controls-grid {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: var(--sp-base);
   padding: var(--sp-base);
-  flex-grow: 1;
+  flex: 1 1 auto;
+  min-height: 0; /* Important for flex-child overflow */
   overflow-y: auto;
-  min-height: 0; /* Important for flex-child grid overflow */
 }
+
+
 
 @media (max-width: 640px) {
   .controls-grid {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
     overflow-y: auto;
-    padding-bottom: var(--sp-xl);
+    /* keep bottom padding consistent with safe area */
+    padding-bottom: calc(var(--sp-xl) + env(safe-area-inset-bottom));
   }
 }
+
 
 /* ── Left Side: Driving Cluster ────────────────────────────── */
 .drive-cluster {
@@ -264,6 +272,7 @@
 
 /* ── Velocity Section ──────────────────────────────────────── */
 .velocity-section {
+  /* Bottom bar: fixed height behavior via predictable padding + no extra overflow */
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
@@ -271,7 +280,7 @@
   border-top-left-radius: var(--radius-lg);
   border-top-right-radius: var(--radius-lg);
   border-bottom: none;
-  padding: var(--sp-base) var(--sp-xl) calc(var(--sp-base) + var(--safe-bottom)) var(--sp-xl);
+  padding: var(--sp-base) var(--sp-xl) calc(var(--sp-base) + env(safe-area-inset-bottom)) var(--sp-xl);
   display: flex;
   flex-direction: column;
   gap: var(--sp-sm);
@@ -279,6 +288,7 @@
   flex-shrink: 0;
   margin: 0 var(--sp-base);
 }
+
 
 .velocity-header {
   display: flex;
@@ -322,12 +332,10 @@
 
 /* Extremely small mobile screens vertical layout adjustments */
 @media (max-height: 600px) and (orientation: portrait) {
-  .dashboard {
-    overflow-y: auto;
-  }
   .controls-grid {
     grid-template-columns: 1fr;
-    overflow-y: visible;
+    /* keep middle scrollable to avoid cutting off bottom controls */
+    overflow-y: auto;
   }
   .velocity-section {
     position: relative;
@@ -342,15 +350,12 @@
   }
 }
 
+
 /* Landscape orientation on mobile viewports */
 @media (max-height: 480px) and (orientation: landscape) {
-  .dashboard {
-    height: auto;
-    overflow-y: auto;
-  }
   .controls-grid {
     grid-template-columns: 1fr 1fr;
-    overflow-y: visible;
+    overflow-y: auto;
   }
   .velocity-section {
     position: relative;
@@ -360,3 +365,4 @@
     border: 1px solid var(--glass-border);
   }
 }
+

@@ -34,13 +34,15 @@ body {
   font-size: var(--fs-base);
   line-height: var(--lh-normal);
   letter-spacing: var(--ls-normal);
+
+  /* Let inner dashboard handle scrolling (mobile cut-off fix) */
   overflow: hidden;
-  overflow-y: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overscroll-behavior: none;
 }
+
 
 /* ── Selection Styling ─────────────────────────────────────── */
 ::selection {
