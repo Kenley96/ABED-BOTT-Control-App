@@ -39,13 +39,37 @@ function $$(selector) {
 export function updateConnectionUI(isConnected, isConnecting) {
   const statusDot = document.getElementById('statusDot');
   const statusLabel = document.getElementById('statusLabel');
+  const banner = document.getElementById('offlineBanner');
+  const controlButtons = document.querySelectorAll('.controls-grid button');
 
   if (!navigator.onLine) {
     statusDot.classList.remove('connected', 'connecting');
     statusDot.classList.add('disconnected');
     statusLabel.textContent = 'Offline Mode Active';
+    if (banner) banner.style.display = 'flex';
+    controlButtons.forEach(btn => btn.disabled = true);
+    // Start auto-retry interval if not already running
+    if (!window._offlineRetryInterval) {
+      // Add a global online listener once
+      if (typeof window !== 'undefined' && !window._hasOnlineListener) {
+        window.addEventListener('online', () => {
+          import('./socket-service.js').then(module => {
+            module.default.connect();
+          });
+        });
+        window._hasOnlineListener = true;
+      }
+    }
     return;
   }
+
+  // Online path
+  if (banner) banner.style.display = 'none';
+  if (window._offlineRetryInterval) {
+    clearInterval(window._offlineRetryInterval);
+    window._offlineRetryInterval = null;
+  }
+  controlButtons.forEach(btn => btn.disabled = false);
 
   if (isConnected) {
     statusDot.classList.remove('disconnected');

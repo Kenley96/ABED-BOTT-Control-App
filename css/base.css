@@ -95,6 +95,57 @@ body {
   scrollbar-color: var(--neon-cyan-60) var(--slate-30);
 }
 
+/* ------------------------------------------------------------------ */
+/*  Layout for control panel */
+/* ------------------------------------------------------------------ */
+
+/* Grid container for control buttons */
+.controls-grid {
+  display: grid;
+  gap: var(--sp-sm);
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  justify-items: center;
+  align-items: center;
+  padding: var(--sp-md);
+}
+
+/* Button base styling (ensure consistent size) */
+.controls-grid button {
+  width: 100%;
+  max-width: 120px;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-sm, var(--glow-cyan-sm));
+  color: var(--text-white);
+  font-size: var(--fs-md);
+  transition: background var(--duration-fast) ease, transform var(--duration-fast) ease;
+}
+
+.controls-grid button:active {
+  transform: scale(0.95);
+}
+
+/* Disabled state */
+.controls-grid button:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Orientation specific tweaks */
+@media (orientation: portrait) {
+  .controls-grid {
+    grid-template-columns: repeat(2, minmax(80px, 1fr));
+  }
+}
+
+@media (orientation: landscape) {
+  .controls-grid {
+    grid-template-columns: repeat(4, minmax(80px, 1fr));
+  }
+}
+
 /* ── Base Elements ─────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
