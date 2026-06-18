@@ -29,12 +29,33 @@ const CORE_ASSETS = [
 ];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(CORE_ASSETS))
-      .then(() => self.skipWaiting())
-  );
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+
+    // Harden install: cache whatever we can. If one asset is missing,
+    // cache.addAll would reject and fail the whole SW install.
+    await Promise.all(
+      CORE_ASSETS.map(async (asset) => {
+        try {
+          // Use absolute URL so the SW can resolve it reliably.
+          const request = new Request(new URL(asset, self.location).toString(), {
+            cache: 'reload'
+          });
+          const response = await fetch(request);
+          if (response && response.status === 200) {
+            await cache.put(request, response);
+          }
+        } catch (e) {
+          // Ignore missing/unreachable assets during install.
+          // Offline-first should still work for the rest of the shell.
+        }
+      })
+    );
+
+    await self.skipWaiting();
+  })());
 });
+
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
@@ -55,37 +76,67 @@ self.addEventListener('fetch', (event) => {
   // are left untouched so socket-service.js can still attempt direct requests to 192.168.4.1.
   const isLocalAsset = url.origin === location.origin;
 
-  // App navigation: cache-first to ensure offline loads.
+  const safeCacheMatch = async (req) => {
+    // First try exact match.
+    const exact = await caches.match(req);
+    if (exact) return exact;
+
+    // Then try a normalized pathname match for common app-shell requests.
+    try {
+      const pathname = new URL(req.url).pathname;
+      const normalized = await caches.match(pathname);
+      if (normalized) return normalized;
+    } catch (_) {}
+
+    return null;
+  };
+
+  // App navigation: stale-while-revalidate with offline fallback.
   if (isNavigation) {
-    event.respondWith(
-      caches.match('./index.html')
-        .then((cached) => cached || fetch(event.request).catch(() => cached))
-    );
-    return;
-  }
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
 
-  // Cache-first for local app shell/static assets.
-  if (isLocalAsset) {
-    event.respondWith(
-      caches.match(event.request)
-        .then((cachedResponse) => {
-          if (cachedResponse) return cachedResponse;
-          return fetch(event.request)
-            .then((networkResponse) => {
-              // Cache successful responses.
-              if (networkResponse && networkResponse.status === 200) {
-                const copy = networkResponse.clone();
-                caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-              }
-              return networkResponse;
-            })
-            .catch(() => cachedResponse);
+      // Prefer cached shell immediately.
+      const cached = await cache.match('./index.html') || await cache.match('/index.html') || await safeCacheMatch(event.request);
+
+      // Background refresh (best effort).
+      const networkFetch = fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            cache.put(event.request, networkResponse.clone());
+          }
+          return networkResponse;
         })
-    );
+        .catch(() => cached);
+
+      return cached || networkFetch;
+    })());
     return;
   }
 
-  // Non-local requests: network-first (do not cache).
+  // Same-origin local assets: stale-while-revalidate.
+  if (isLocalAsset) {
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+
+      const cachedResponse = await safeCacheMatch(event.request);
+
+      const networkFetch = fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            cache.put(event.request, networkResponse.clone());
+          }
+          return networkResponse;
+        })
+        .catch(() => cachedResponse);
+
+      // Serve cache immediately if present.
+      return cachedResponse || networkFetch;
+    })());
+    return;
+  }
+
+  // Non-local requests: network-only (do not cache).
   // If offline, this will fail and socket-service.js will handle its own error state.
   event.respondWith(
     fetch(event.request).catch(() => {
@@ -93,4 +144,5 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
+
 
