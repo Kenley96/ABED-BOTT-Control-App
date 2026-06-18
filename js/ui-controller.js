@@ -37,6 +37,30 @@ function $$(selector) {
  * @param {boolean} isConnecting
  */
 export function updateConnectionUI(isConnected, isConnecting) {
+  const statusDot = document.getElementById('statusDot');
+  const statusLabel = document.getElementById('statusLabel');
+
+  if (!navigator.onLine) {
+    statusDot.classList.remove('connected', 'connecting');
+    statusDot.classList.add('disconnected');
+    statusLabel.textContent = 'Offline Mode Active';
+    return;
+  }
+
+  if (isConnected) {
+    statusDot.classList.remove('disconnected');
+    statusDot.classList.add('connected');
+    statusLabel.textContent = 'Connected to Car';
+  } else if (isConnecting) {
+    statusDot.classList.remove('connected');
+    statusDot.classList.add('connecting');
+    statusLabel.textContent = 'Connecting...';
+  } else {
+    statusDot.classList.remove('connected', 'connecting');
+    statusDot.classList.add('disconnected');
+    statusLabel.textContent = 'Disconnected';
+  }
+}
   const dot   = $('.status-dot');
   const label = $('.status-label');
   const btn   = $('#connectBtn');
