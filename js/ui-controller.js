@@ -61,37 +61,7 @@ export function updateConnectionUI(isConnected, isConnecting) {
     statusLabel.textContent = 'Disconnected';
   }
 }
-  const dot   = $('.status-dot');
-  const label = $('.status-label');
-  const btn   = $('#connectBtn');
 
-  if (dot) {
-    dot.classList.toggle('connected', isConnected);
-    dot.classList.toggle('connecting', isConnecting && !isConnected);
-    dot.classList.toggle('disconnected', !isConnected && !isConnecting);
-  }
-
-  if (label) {
-    if (isConnected)       label.textContent = 'Connected';
-    else if (isConnecting) label.textContent = 'Connecting…';
-    else                   label.textContent = 'Disconnected';
-  }
-
-  if (btn) {
-    if (isConnected) {
-      btn.textContent = 'DISCONNECT';
-      btn.classList.add('connected');
-      btn.classList.remove('connecting');
-    } else if (isConnecting) {
-      btn.textContent = 'CONNECTING…';
-      btn.classList.add('connecting');
-      btn.classList.remove('connected');
-    } else {
-      btn.textContent = 'CONNECT';
-      btn.classList.remove('connected', 'connecting');
-    }
-  }
-}
 
 /* ------------------------------------------------------------------ */
 /*  Security gate overlay                                              */
