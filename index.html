@@ -378,18 +378,16 @@
       window.addEventListener('online', sync);
       window.addEventListener('offline', sync);
       sync();
-
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker
-            .register('./sw.js')
-            .then((reg) => console.log('[Service Worker] Registered successfully:', reg.scope))
-            .catch((err) => console.error('[Service Worker] Registration failed:', err));
-        });
-      }
     })();
   </script>
   <script type="module" src="js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('Service Worker registered'))
+        .catch(err => console.error('SW registration failed:', err));
+    }
+  </script>
 </body>
 
 </html>

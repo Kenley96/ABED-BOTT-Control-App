@@ -13,6 +13,10 @@ class SocketService {
     this._pollInterval = 3000; // Poll status every 3s
     this._pollTimer = null;
     this._wasConnected = false;
+
+    // Retry connection probe when user hits CONNECT but ESP32 isn't reachable yet
+    this._connectRetryIntervalMs = 1000; // ~1s
+    this._connectRetryTimer = null;
   }
 
   /* ---------------------------------------------------------------- */
@@ -38,26 +42,22 @@ class SocketService {
     // We still attempt direct LAN requests to 192.168.4.1.
     // Service worker also won’t intercept cross-origin requests.
 
+    // Clear any previous retry loop (e.g. user clicked CONNECT multiple times)
+    this._stopConnectRetry();
 
+    // Start retrying probe until the ESP32 responds.
+    // (First attempt happens immediately below.)
+    this._connectRetryTimer = setInterval(() => {
+      if (stateManager.getState('isConnected')) return;
+      this._probeConnection();
+    }, this._connectRetryIntervalMs);
+
+    // Immediate first probe
     try {
-      // Send a test probe request (with a short 2.5s timeout)
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2500);
-
-      const response = await fetch(`${BASE_URL}/cmd`, {
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-
-      // Even if response is forbidden (403), it means the ESP32 is online!
-      if (response.ok || response.status === 403) {
-        this._onOpen();
-      } else {
-        throw new Error(`Server returned status: ${response.status}`);
-      }
+      await this._probeConnection();
     } catch (err) {
+      // If probe fails, _probeConnection will trigger _onError and/or keep retrying.
       console.error('[SocketService] probe connection failed:', err);
-      this._onError();
     }
   }
 
@@ -66,6 +66,7 @@ class SocketService {
    */
   disconnect() {
     this._stopPolling();
+    this._stopConnectRetry();
     this._wasConnected = false;
 
     stateManager.patch({
@@ -117,6 +118,9 @@ class SocketService {
       connectionError: null
     });
 
+    // Stop connect retry loop on success
+    this._stopConnectRetry();
+
     this._startPolling();
   }
 
@@ -127,6 +131,38 @@ class SocketService {
       isConnecting: false,
       connectionError: 'Smart Car not found. Make sure you are connected to the "SMARTCAR" Wi-Fi AP.'
     });
+  }
+
+  async _probeConnection() {
+    // Send a test probe request (with a short timeout)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2500);
+
+    try {
+      const response = await fetch(`${BASE_URL}/cmd`, {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      // Even if response is forbidden (403), it means the ESP32 is online!
+      if (response.ok || response.status === 403) {
+        this._onOpen();
+      } else {
+        throw new Error(`Server returned status: ${response.status}`);
+      }
+    } catch (err) {
+      clearTimeout(timeoutId);
+      console.error('[SocketService] probe connection failed:', err);
+      this._onError();
+      // Do not throw: retry loop (connect()) will handle further attempts.
+    }
+  }
+
+  _stopConnectRetry() {
+    if (this._connectRetryTimer) {
+      clearInterval(this._connectRetryTimer);
+      this._connectRetryTimer = null;
+    }
   }
 
   _startPolling() {
