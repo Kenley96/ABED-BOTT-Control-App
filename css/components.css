@@ -194,12 +194,25 @@
 .mode-status {
   font-family: var(--font-mono);
   font-size: var(--fs-2xs);
-  color: var(--text-white); /* FIXED: matches Cancel Mode */
+  color: var(--text-white);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xs);
   padding: var(--sp-2xs) var(--sp-xs);
   letter-spacing: var(--ls-tight);
   text-shadow: 0 0 10px rgba(41,182,246,0.22);
+}
+
+/* 🔧 FIX: make Human Following & Obstacle Avoidance text visible */
+.mode-card .mode-label,
+.mode-card .mode-status {
+  color: var(--text-white);
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+}
+
+.mode-card:hover .mode-label,
+.mode-card:hover .mode-status {
+  color: var(--text-white);
+  text-shadow: 0 0 10px rgba(41,182,246,0.25);
 }
 
 .mode-card:hover {
@@ -223,12 +236,12 @@
 }
 
 .mode-card.active .mode-label {
-  color: var(--text-white); /* FIXED: matches Cancel Mode */
+  color: var(--text-white);
   text-shadow: var(--glow-cyan-text);
 }
 
 .mode-card.active .mode-status {
-  color: var(--text-white); /* FIXED: matches Cancel Mode */
+  color: var(--text-white);
   border-color: rgba(79,195,247,0.55);
   background: rgba(79,195,247,0.12);
   text-shadow: 0 0 10px rgba(41,182,246,0.25);
