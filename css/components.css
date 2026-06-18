@@ -29,9 +29,10 @@
 .app-title {
   font-size: var(--fs-md);
   font-weight: var(--fw-bold);
-  color: var(--text-white);
+  color: var(--text-primary);
   letter-spacing: var(--ls-wide);
-  text-shadow: var(--glow-cyan-text);
+  text-shadow: 0 0 10px rgba(41,182,246,0.25);
+
   line-height: var(--lh-tight);
 }
 
@@ -39,9 +40,9 @@
   font-family: var(--font-mono);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-thin);
-  color: var(--neon-cyan);
+  color: var(--primary);
   letter-spacing: var(--ls-ultra);
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .header-right {
@@ -56,8 +57,8 @@
   align-items: center;
   gap: var(--sp-sm);
   padding: var(--sp-xs) var(--sp-sm);
-  background: var(--white-05);
-  border: 1px solid var(--glass-border);
+  background: rgba(79,195,247,0.08);
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
 }
 
@@ -90,7 +91,7 @@
   font-family: var(--font-mono);
   font-size: var(--fs-2xs);
   text-transform: uppercase;
-  color: var(--white-80);
+  color: var(--text-secondary);
 }
 
 /* ── Connect Button ────────────────────────────────────────── */
@@ -101,8 +102,8 @@
   padding: var(--sp-sm) var(--sp-base);
   border: 1px solid var(--neon-cyan-60);
   border-radius: var(--radius-sm);
-  background: var(--neon-cyan-08);
-  color: var(--neon-cyan);
+  background: rgba(79,195,247,0.10);
+  color: var(--primary);
   font-size: var(--fs-xs);
   font-weight: var(--fw-bold);
   letter-spacing: var(--ls-wide);
@@ -113,10 +114,10 @@
 }
 
 .connect-btn:hover {
-  background: var(--neon-cyan-25);
-  border-color: var(--neon-cyan);
-  color: var(--text-white);
-  box-shadow: var(--glow-cyan-md);
+  background: rgba(79,195,247,0.18);
+  border-color: var(--primary-glow);
+  color: var(--text-primary);
+  box-shadow: 0 0 18px rgba(41,182,246,0.18);
 }
 
 .connect-btn:active {
@@ -758,11 +759,11 @@
   font-family: var(--font-display);
   font-size: var(--fs-2xs);
   font-weight: var(--fw-bold);
-  color: var(--white-50);
+  color: var(--text-secondary);
   letter-spacing: var(--ls-ultra);
   text-transform: uppercase;
   margin-bottom: var(--sp-md);
-  border-left: 2px solid var(--royal-blue);
+  border-left: 2px solid var(--primary);
   padding-left: var(--sp-sm);
 }
 
@@ -783,13 +784,13 @@
 
 .toast {
   pointer-events: auto;
-  background: var(--glass-bg-heavy);
+  background: rgba(255,255,255,0.86);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(79,195,247,0.25);
   border-radius: var(--radius-md);
   padding: var(--sp-sm) var(--sp-base);
-  color: var(--text-white);
+  color: var(--text-primary);
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
   display: flex;
